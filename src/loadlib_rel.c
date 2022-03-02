@@ -61,7 +61,7 @@ static void setprogdir (lua_State *L);
   #include <sys/cygwin.h>
 #endif
 
-#if defined(__linux__) || defined(__sun)
+#if defined(__linux__) || defined(__sun) || defined(EMSCRIPTEN)
   #include <unistd.h> /* readlink */
 #endif
 
@@ -87,7 +87,7 @@ static void setprogdir(lua_State *L) {
   n = strlen(progdir);
 #elif defined(_WIN32)
   n = GetModuleFileNameA(NULL, progdir, nsize);
-#elif defined(__linux__)
+#elif defined(__linux__) || defined(EMSCRIPTEN)
   n = readlink("/proc/self/exe", progdir, nsize);
   if (n > 0) progdir[n] = 0;
 #elif defined(__sun)
