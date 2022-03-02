@@ -139,6 +139,7 @@ endif ( )
 # Create dynamic library
 add_library ( liblua SHARED ${SRC_LIB} ${LUA_DLL_RC} ${LUA_DEF} )
 target_link_libraries ( liblua ${LIBS} )
+target_include_directories(liblua INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/src ${CMAKE_CURRENT_BINARY_DIR})
 set_target_properties ( liblua PROPERTIES OUTPUT_NAME lua CLEAN_DIRECT_OUTPUT 1 )
 if ( LUA_BUILD_AS_DLL )
   set_target_properties ( liblua PROPERTIES COMPILE_DEFINITIONS LUA_BUILD_AS_DLL )
@@ -147,6 +148,7 @@ endif ( )
 # Create static library, this is needed to compile luac in the 5.1.x Lua series
 add_library ( liblua_static STATIC ${SRC_LIB} )
 target_link_libraries ( liblua_static ${LIBS} )
+target_include_directories(liblua_static INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/src ${CMAKE_CURRENT_BINARY_DIR})
 
 add_executable ( lua ${SRC_LUA} ${LUA_RC} )
 target_link_libraries ( lua liblua )
