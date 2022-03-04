@@ -87,7 +87,7 @@ static void setprogdir(lua_State *L) {
   n = strlen(progdir);
 #elif defined(_WIN32)
   n = GetModuleFileNameA(NULL, progdir, nsize);
-#elif defined(__linux__) || defined(EMSCRIPTEN)
+#elif defined(__linux__)
   n = readlink("/proc/self/exe", progdir, nsize);
   if (n > 0) progdir[n] = 0;
 #elif defined(__sun)
@@ -112,6 +112,9 @@ static void setprogdir(lua_State *L) {
   uint32_t nsize_apple = nsize;
   if (_NSGetExecutablePath(progdir, &nsize_apple) == 0)
     n = strlen(progdir);
+#elif defined(EMSCRIPTEN)
+  n = 5;
+  strcpy(progdir, "/fake");
 #else
   // FALLBACK
   // Use 'lsof' ... should work on most UNIX systems (incl. OSX)
