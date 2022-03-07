@@ -173,6 +173,7 @@ install_foo ( etc/ )
 install_test ( test/ )
 
 ## TESTS
+if(LUA_BUILD_TESTS)
 set ( LUA lua )
 
 add_lua_test ( test/bisect.lua )
@@ -200,3 +201,5 @@ add_lua_test ( test/sort.lua )
 add_lua_test ( test/trace-calls.lua )
 add_lua_test ( test/trace-globals.lua )
 #add_lua_test ( test/xd.lua ) # Requires input
+endif()
+
